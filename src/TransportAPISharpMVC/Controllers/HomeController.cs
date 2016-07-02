@@ -1,15 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using TransportAPISharpMVC.Models;
 
 namespace TransportAPISharpMVC.Controllers
 {
     public class HomeController : Controller
     {
+        private AppKeyConfig _appKeys;
+
+        public HomeController(IOptions<AppKeyConfig> appKeys)
+        {
+            _appKeys = appKeys.Value;
+        }
+
         public IActionResult Index()
         {
+            ViewData["BingMapsAPIKey"] = _appKeys.BingMapsAPIKey;
+
             return View();
         }
 
